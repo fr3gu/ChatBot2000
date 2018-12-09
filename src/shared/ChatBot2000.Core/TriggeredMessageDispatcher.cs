@@ -6,16 +6,16 @@ namespace ChatBot2000.Core
 {
     public class TriggeredMessageDispatcher
     {
-        public List<RepeatingMessage> MessagesToDispatch { get; set; }
+        public List<IAutoMessage> MessagesToDispatch { get; set; }
         public List<string> QueuedMessages { get; set; }
 
         public TriggeredMessageDispatcher()
         {
-            MessagesToDispatch = new List<RepeatingMessage>();
+            MessagesToDispatch = new List<IAutoMessage>();
             QueuedMessages = new List<string>();
         }
 
-        public void Publish(RepeatingMessage repeatingMessage)
+        public void Publish(IAutoMessage repeatingMessage)
         {
             MessagesToDispatch.Add(repeatingMessage);
         }

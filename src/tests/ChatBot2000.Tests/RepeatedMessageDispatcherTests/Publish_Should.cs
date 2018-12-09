@@ -12,11 +12,7 @@ namespace ChatBot2000.Tests.RepeatedMessageDispatcherTests
         {
             var sut = new TriggeredMessageDispatcher();
 
-            var repeatedMessage = new RepeatingMessage
-            {
-                RepeatEvery = 15,
-                Message = "This is an automated message! This message will repeat."
-            };
+            var repeatedMessage = new RepeatingMessage(15, "This is an automated message! This message will repeat.");
 
             sut.Publish(repeatedMessage);
 
