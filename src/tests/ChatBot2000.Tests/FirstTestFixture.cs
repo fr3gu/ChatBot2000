@@ -1,10 +1,10 @@
-﻿using NUnit.Framework;
+using NUnit.Framework;
 using System;
 
 namespace ChatBot2000.Tests
 {
     [TestFixture]
-    public class Class1
+    public class FirstTestFixture
     {
         [Test]
         public void AssertTestFrameWorkWorks()
