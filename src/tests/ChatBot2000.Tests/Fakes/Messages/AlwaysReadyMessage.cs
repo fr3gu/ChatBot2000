@@ -6,12 +6,12 @@ namespace ChatBot2000.Tests.Fakes.Messages
     {
         public string Message => "Always Ready";
 
-        public bool IsTimeToDispatch(int secondsPassed)
+        public bool IsTimeToDispatch(long milliSecondsPassed)
         {
             return true;
         }
 
-        public string GetMessageInstance(int secondsPassed)
+        public string GetMessageInstance(long milliSecondsPassed)
         {
             return Message;
         }

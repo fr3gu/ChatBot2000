@@ -7,12 +7,12 @@ namespace ChatBot2000.Tests.Fakes.Messages
     {
         public string Message => throw new NotImplementedException();
 
-        public bool IsTimeToDispatch(int secondsPassed)
+        public bool IsTimeToDispatch(long milliSecondsPassed)
         {
             return false;
         }
 
-        public string GetMessageInstance(int secondsPassed)
+        public string GetMessageInstance(long milliSecondsPassed)
         {
             return Message;
         }
