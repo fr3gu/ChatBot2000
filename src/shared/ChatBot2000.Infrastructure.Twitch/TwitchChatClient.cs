@@ -10,18 +10,25 @@ namespace ChatBot2000.Infrastructure.Twitch
     public class TwitchChatClient : IChatClient
     {
         private readonly TwitchClient _twitchClient;
+        private readonly TaskCompletionSource<bool> _connectionCompletionTask = new TaskCompletionSource<bool>();
+        private readonly TwitchClientSettings _settings;
 
-        public TwitchChatClient(string userName, string oAuth)
+        public TwitchChatClient(TwitchClientSettings settings)
         {
-            var connectionCredentials = new ConnectionCredentials("chatbot2k", "oauth:vf3y61q70ara81seel2rmpne3ycdqb");
+            _settings = settings;
+            var connectionCredentials = new ConnectionCredentials(settings.UserName, settings.OAuth);
             _twitchClient = new TwitchClient();
             _twitchClient.Initialize(connectionCredentials, "fr3gu_");
-            _twitchClient.Connect();
             _twitchClient.OnJoinedChannel += TwitchClientOnOnJoinedChannel;
             _twitchClient.OnUserJoined += TwitchClientOnOnUserJoined;
             _twitchClient.OnUserLeft += TwitchClientOnOnUserLeft;
             _twitchClient.AddChatCommandIdentifier('!');
             _twitchClient.OnChatCommandReceived += TwitchClientOnOnChatCommandReceived;
+        }
+
+        private void TwitchClientOnOnConnected(object sender, OnConnectedArgs e)
+        {
+            _connectionCompletionTask.SetResult(true);
         }
 
         private void TwitchClientOnOnChatCommandReceived(object sender, OnChatCommandReceivedArgs e)
@@ -38,7 +45,7 @@ namespace ChatBot2000.Infrastructure.Twitch
         {
             if (e.Username != "chatbot2k")
             {
-                SendMessage($"Ohai {e.Username}");
+                SendMessage($"Ohai {e.Username}! \\o");
             }
         }
 
@@ -48,17 +55,20 @@ namespace ChatBot2000.Infrastructure.Twitch
         }
 
 
-        public void Connect()
+        public async Task Connect()
         {
             if (!_twitchClient.IsConnected)
             {
                 _twitchClient.Connect();
+                _twitchClient.OnConnected += TwitchClientOnOnConnected;
             }
+
+            await _connectionCompletionTask.Task;
         }
 
         public void SendMessage(string message)
         {
-            if(_twitchClient.IsConnected) _twitchClient.SendMessage("fr3gu_", message);
+            if(_twitchClient.IsConnected) _twitchClient.SendMessage(_settings.Channel, message);
         }
     }
 }
