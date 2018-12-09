@@ -1,15 +1,14 @@
 using System;
 using System.Diagnostics;
-using System.Linq;
 using System.Threading;
 using ChatBot2000.Core;
 using ChatBot2000.Core.Messages;
 
-namespace ChatBot2000
+namespace ChatBot2000.Cons
 {
-    class Program
+    internal class Program
     {
-        static void Main(string[] args)
+        private static void Main(string[] args)
         {
             Console.WriteLine("Bot started.");
             Console.WriteLine("Press Ctrl+C to exit...");
@@ -22,11 +21,11 @@ namespace ChatBot2000
 
             while (true)
             {
+                
                 dispatcher.CheckMessages((int)sw.ElapsedMilliseconds / 1000);
-                foreach (var message in dispatcher.QueuedMessages.ToList())
+                while(dispatcher.TryDequeueMessage(out var message))
                 {
-                    Console.WriteLine(message);
-                    dispatcher.QueuedMessages.Remove(message);
+                    Console.WriteLine($"{DateTime.Now:HH:mm:ss}: {message}");
                 }
 
                 Thread.Sleep(500);
