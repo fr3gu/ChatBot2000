@@ -241,3 +241,4 @@ log-file.txt
 \.idea/\.idea\.Testsystem/riderModule\.iml
 
 \.idea/config/applicationhost\.config
+/src/app/ChatBot2000.Cons/appsettings.json
