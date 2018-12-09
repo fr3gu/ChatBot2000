@@ -8,14 +8,14 @@ namespace ChatBot2000.Tests.RepeatedMessageDispatcherTests
     public class Publish_Should
     {
         [Test]
-        public void AddRepeatedMessageToQueue_GivenDelay()
+        public void AddRepeatingMessageToQueue_GivenDelay()
         {
-            var sut = new RepeatedMessageDispatcher();
+            var sut = new TriggeredMessageDispatcher();
 
-            var repeatedMessage = new RepeatedMessage
+            var repeatedMessage = new RepeatingMessage
             {
-                Delay = 15,
-                Message = "This is an automated message!"
+                RepeatEvery = 15,
+                Message = "This is an automated message! This message will repeat."
             };
 
             sut.Publish(repeatedMessage);
