@@ -1,8 +1,8 @@
 using ChatBot2000.Core;
+using ChatBot2000.Core.Messages;
 using NUnit.Framework;
-using System;
 
-namespace ChatBot2000.Tests.RepeatedMessageDispatcherTests
+namespace ChatBot2000.Tests.MessageDispatcherTests
 {
     [TestFixture]
     public class Publish_Should
@@ -10,7 +10,7 @@ namespace ChatBot2000.Tests.RepeatedMessageDispatcherTests
         [Test]
         public void AddRepeatingMessageToQueue_GivenDelay()
         {
-            var sut = new TriggeredMessageDispatcher();
+            var sut = new MessageDispatcher();
 
             var repeatedMessage = new RepeatingMessage(15, "This is an automated message! This message will repeat.");
 

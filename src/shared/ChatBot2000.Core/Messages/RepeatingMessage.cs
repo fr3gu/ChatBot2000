@@ -1,19 +1,10 @@
-using System;
-using System.Collections.Generic;
-using System.Text;
-using ChatBot2000.Core.Helpers;
+using ChatBot2000.Core.Interfaces;
 
-namespace ChatBot2000.Core
+namespace ChatBot2000.Core.Messages
 {
-    public interface IAutoMessage
-    {
-        string Message { get; }
-        bool IsTimeToDispatch(int secondsPassed);
-    }
-
     public class RepeatingMessage : IAutoMessage
     {
-        private DateTime _lastRun;
+        private int _lastRun;
         /// <summary>
         /// Gets the delay in seconds, i.e. repeat every x seconds
         /// </summary>
@@ -22,7 +13,7 @@ namespace ChatBot2000.Core
 
         public RepeatingMessage(int repeatEvery, string message)
         {
-            _lastRun = new DateTime(1800, 1, 1, 0, 0, 0);
+            _lastRun = 0;
             RepeatEvery = repeatEvery;
             Message = message;
         }
@@ -32,12 +23,17 @@ namespace ChatBot2000.Core
             if (RepeatEvery == 0) return false;
 
             // ReSharper disable once InvertIf
-            if (secondsPassed % RepeatEvery == 0)
+            if (secondsPassed >= _lastRun + RepeatEvery)
             {
-                _lastRun = SystemTimeService.Now();
                 return true;
             }
             return false;
+        }
+
+        public string GetMessageInstance(int secondsPassed)
+        {
+            _lastRun = secondsPassed;
+            return Message;
         }
     }
 }
