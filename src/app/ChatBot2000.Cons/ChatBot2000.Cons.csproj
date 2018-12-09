@@ -8,4 +8,8 @@
     <LangVersion>latest</LangVersion>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\shared\ChatBot2000.Core\ChatBot2000.Core.csproj" />
+  </ItemGroup>
+
 </Project>
