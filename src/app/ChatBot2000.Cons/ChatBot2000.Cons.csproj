@@ -1,0 +1,11 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
+    <AssemblyName>ChatBot2000.Cons</AssemblyName>
+    <RootNamespace>ChatBot2000.Cons</RootNamespace>
+    <LangVersion>latest</LangVersion>
+  </PropertyGroup>
+
+</Project>
