@@ -31,12 +31,9 @@ namespace ChatBot2000.Cons
 
             var chatClients = GetChatClients(config);
 
-            //var genericJsonFileRepository = new GenericJsonFileRepository();
-            //var commandMessages = genericJsonFileRepository.List(new ActiveMessagePolicy<StaticCommandResponseMessage>());
-
             Console.WriteLine($"{DateTime.Now:HH:mm:ss}: Application started successfully.");
 
-            var commandMessages = efGenericRepo.List(new ActiveMessagePolicy<StaticCommandResponseMessage>());
+            var commandMessages = efGenericRepo.List(StatusPolicy<SimpleResponseMessage>.ActiveOnly());
             var commandHandler = new CommandHandler(chatClients, commandMessages);
             var botMain = new BotMain(chatClients, efGenericRepo, commandHandler);
 

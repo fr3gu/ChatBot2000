@@ -28,12 +28,12 @@ namespace ChatBot2000.Infrastructure.Json
             throw new NotImplementedException();
         }
 
-        public void Update<T>(T dataItem) where T : DataItem
+        public T Update<T>(T dataItem) where T : DataItem
         {
             throw new NotImplementedException();
         }
 
-        public List<T> Create<T>(List<T> dataItemList) where T : DataItem
+        public void Create<T>(List<T> dataItemList) where T : DataItem
         {
             throw new NotImplementedException();
         }

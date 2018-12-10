@@ -5,19 +5,19 @@ using ChatBot2000.Core.Messaging;
 
 namespace ChatBot2000.Core.Data
 {
-    public class DataItemPolicy<T> : ISpecification<T> where T : DataItem
+    public class StatusPolicy<T> : ISpecification<T> where T : DataItem
     {
-        public DataItemPolicy(Expression<Func<T, bool>> predicate)
+        public StatusPolicy(Expression<Func<T, bool>> predicate)
         {
             Predicate = predicate;
         }
 
-        public static DataItemPolicy<T> ByStatus(DataItemStatus dataItemStatus)
+        public static StatusPolicy<T> ByStatus(DataItemStatus dataItemStatus)
         {
-            return new DataItemPolicy<T>(t => t.DataItemStatus == dataItemStatus);
+            return new StatusPolicy<T>(t => t.DataItemStatus == dataItemStatus);
         }
 
-        public static DataItemPolicy<T> ActiveOnly()
+        public static StatusPolicy<T> ActiveOnly()
         {
             return ByStatus(DataItemStatus.Active);
         }

@@ -6,18 +6,11 @@ namespace ChatBot2000.Core.Messaging
     public class RepeatingMessage : DataItem, IAutoMessage
     {
         private long _lastRun;
-        /// <summary>
-        /// Gets the delay in milliseconds, i.e. repeat every x milliseconds
-        /// </summary>
-        public long RepeatEvery { get; }
-        public string Message { get; }
 
-        public RepeatingMessage(long repeatEvery, string message, DataItemStatus dataItemStatus = DataItemStatus.Draft)
+        public string GetMessageInstance(long milliSecondsPassed)
         {
-            _lastRun = 0;
-            RepeatEvery = repeatEvery;
-            Message = message;
-            DataItemStatus = dataItemStatus;
+            _lastRun = milliSecondsPassed;
+            return Message;
         }
 
         public bool IsTimeToDispatch(long milliSecondsPassed)
@@ -27,10 +20,24 @@ namespace ChatBot2000.Core.Messaging
             return milliSecondsPassed >= _lastRun + RepeatEvery;
         }
 
-        public string GetMessageInstance(long milliSecondsPassed)
+        public string Message { get; }
+
+        /// <summary>
+        /// Gets the delay in milliseconds, i.e. repeat every x milliseconds
+        /// </summary>
+        public long RepeatEvery { get; }
+
+        public RepeatingMessage()
         {
-            _lastRun = milliSecondsPassed;
-            return Message;
+
+        }
+
+        public RepeatingMessage(long repeatEvery, string message, DataItemStatus dataItemStatus = DataItemStatus.Draft)
+        {
+            _lastRun = 0;
+            RepeatEvery = repeatEvery;
+            Message = message;
+            DataItemStatus = dataItemStatus;
         }
     }
 }
