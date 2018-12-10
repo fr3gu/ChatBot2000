@@ -1,10 +1,9 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using ChatBot2000.Core.Interfaces;
+using ChatBot2000.Core.Messaging.Interfaces;
 
-namespace ChatBot2000.Core
+namespace ChatBot2000.Core.Messaging
 {
     public class MessageDispatcher
     {

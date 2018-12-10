@@ -1,4 +1,5 @@
 using ChatBot2000.Core;
+using ChatBot2000.Core.Messaging;
 using ChatBot2000.Tests.Fakes.Messages;
 using NUnit.Framework;
 

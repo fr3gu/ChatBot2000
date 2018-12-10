@@ -9,7 +9,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChatBot2000.Tests", "src\te
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChatBot2000.Core", "src\shared\ChatBot2000.Core\ChatBot2000.Core.csproj", "{87510FC3-F3B4-4B02-90FB-1C80DC8C3E7F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChatBot2000.Infrastructure.Twitch", "src\shared\ChatBot2000.Infrastructure.Twitch\ChatBot2000.Infrastructure.Twitch.csproj", "{986D8F67-53CE-4820-9D4F-9B8FFDF20580}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChatBot2000.Infrastructure.Twitch", "src\shared\ChatBot2000.Infrastructure.Twitch\ChatBot2000.Infrastructure.Twitch.csproj", "{986D8F67-53CE-4820-9D4F-9B8FFDF20580}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChatBot2000.Infrastructure.Json", "src\shared\ChatBot2000.Infrastructure.Json\ChatBot2000.Infrastructure.Json.csproj", "{5A414E4C-8BE5-4CAF-8147-2FE50A966A36}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChatBot2000.Infrastructure.Ef", "src\shared\ChatBot2000.Infrastructure.Ef\ChatBot2000.Infrastructure.Ef.csproj", "{C65C2C12-3F47-4C5F-9D69-3557377148FB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +37,14 @@ Global
 		{986D8F67-53CE-4820-9D4F-9B8FFDF20580}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{986D8F67-53CE-4820-9D4F-9B8FFDF20580}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{986D8F67-53CE-4820-9D4F-9B8FFDF20580}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5A414E4C-8BE5-4CAF-8147-2FE50A966A36}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5A414E4C-8BE5-4CAF-8147-2FE50A966A36}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5A414E4C-8BE5-4CAF-8147-2FE50A966A36}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5A414E4C-8BE5-4CAF-8147-2FE50A966A36}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C65C2C12-3F47-4C5F-9D69-3557377148FB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C65C2C12-3F47-4C5F-9D69-3557377148FB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C65C2C12-3F47-4C5F-9D69-3557377148FB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C65C2C12-3F47-4C5F-9D69-3557377148FB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

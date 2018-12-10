@@ -1,10 +1,7 @@
-using System.Collections.Generic;
-using System.Text;
-using ChatBot2000.Core;
-using ChatBot2000.Core.Messages;
+using ChatBot2000.Core.Messaging;
 using NUnit.Framework;
 
-namespace ChatBot2000.Tests.RepeatingMessageTest
+namespace ChatBot2000.Tests.RepeatingMessageTests
 {
     [TestFixture]
     public class RepeatingMessage_Should

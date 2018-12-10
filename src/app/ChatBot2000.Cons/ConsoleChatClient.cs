@@ -1,5 +1,6 @@
 using System;
 using System.Threading.Tasks;
+using ChatBot2000.Core;
 using ChatBot2000.Core.Interfaces;
 
 namespace ChatBot2000.Cons
@@ -17,5 +18,14 @@ namespace ChatBot2000.Cons
         {
             Console.WriteLine($"{DateTime.Now:HH:mm:ss}: {message}");
         }
+
+        public Task Disconnect()
+        {
+            Console.WriteLine($"{DateTime.Now:HH:mm:ss}: {nameof(ConsoleChatClient)} disconnected...");
+
+            return Task.CompletedTask;
+        }
+
+        public event EventHandler<CommandReceivedEventArgs> OnCommandReceived;
     }
 }
