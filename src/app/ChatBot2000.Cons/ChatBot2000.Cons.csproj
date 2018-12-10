@@ -9,14 +9,14 @@
     </PropertyGroup>
 
     <ItemGroup>
+        <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="2.0.1" />
         <PackageReference Include="Microsoft.Extensions.Configuration" Version="2.2.0" />
         <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="2.2.0" />
-        <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="2.2.0" />
     </ItemGroup>
 
     <ItemGroup>
         <ProjectReference Include="..\..\shared\ChatBot2000.Core\ChatBot2000.Core.csproj" />
-        <ProjectReference Include="..\..\shared\ChatBot2000.Infrastructure.Json\ChatBot2000.Infrastructure.Json.csproj" />
+        <ProjectReference Include="..\..\shared\ChatBot2000.Infrastructure.Ef\ChatBot2000.Infrastructure.Ef.csproj" />
         <ProjectReference Include="..\..\shared\ChatBot2000.Infrastructure.Twitch\ChatBot2000.Infrastructure.Twitch.csproj" />
     </ItemGroup>
 

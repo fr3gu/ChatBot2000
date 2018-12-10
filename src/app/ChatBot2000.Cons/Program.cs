@@ -4,9 +4,10 @@ using System.IO;
 using ChatBot2000.Core;
 using ChatBot2000.Core.Data;
 using ChatBot2000.Core.Interfaces;
-using ChatBot2000.Core.Messaging.Interfaces;
-using ChatBot2000.Infrastructure.Json;
+using ChatBot2000.Core.Messaging;
+using ChatBot2000.Infrastructure.Ef;
 using ChatBot2000.Infrastructure.Twitch;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 
 namespace ChatBot2000.Cons
@@ -20,16 +21,24 @@ namespace ChatBot2000.Cons
 
             Console.WriteLine($"{DateTime.Now:HH:mm:ss}: Application starting...");
 
-            FakeData.Initialize();
+            var options = new DbContextOptionsBuilder<AppDataContext>()
+                .UseInMemoryDatabase(databaseName: "fake-data-db")
+                .Options;
+
+            var efGenericRepo = new EfGenericRepo(new AppDataContext(options));
+
+            new FakeData(efGenericRepo).Initialize();
 
             var chatClients = GetChatClients(config);
 
-            var genericJsonFileRepository = new GenericJsonFileRepository();
-            List<ICommandMessage> commandMessages = genericJsonFileRepository.List(new ActiveMessagePolicy<ICommandMessage>());
+            //var genericJsonFileRepository = new GenericJsonFileRepository();
+            //var commandMessages = genericJsonFileRepository.List(new ActiveMessagePolicy<StaticCommandResponseMessage>());
 
             Console.WriteLine($"{DateTime.Now:HH:mm:ss}: Application started successfully.");
 
-            var botMain = new BotMain(chatClients, genericJsonFileRepository, new CommandHandler(chatClients, null));
+            var commandMessages = efGenericRepo.List(new ActiveMessagePolicy<StaticCommandResponseMessage>());
+            var commandHandler = new CommandHandler(chatClients, commandMessages);
+            var botMain = new BotMain(chatClients, efGenericRepo, commandHandler);
 
             WaitForCommands(botMain);
         }

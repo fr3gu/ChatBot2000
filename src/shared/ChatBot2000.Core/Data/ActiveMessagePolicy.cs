@@ -6,7 +6,7 @@ using ChatBot2000.Core.Messaging;
 
 namespace ChatBot2000.Core.Data
 {
-    public class ActiveMessagePolicy<T> : ISpecification<T> where T : IDataItem
+    public class ActiveMessagePolicy<T> : ISpecification<T> where T : DataItem
     {
         public ActiveMessagePolicy()
         {

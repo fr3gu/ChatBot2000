@@ -11,7 +11,6 @@ namespace ChatBot2000.Core.Messaging
         /// </summary>
         public long RepeatEvery { get; }
         public string Message { get; }
-        public DataItemStatus DataItemStatus { get; }
 
         public RepeatingMessage(long repeatEvery, string message, DataItemStatus dataItemStatus = DataItemStatus.Draft)
         {

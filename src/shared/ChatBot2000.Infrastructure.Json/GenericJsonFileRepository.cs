@@ -17,13 +17,13 @@ namespace ChatBot2000.Infrastructure.Json
             return list.FirstOrDefault(i => spec.Predicate.Compile().Invoke(i));
         }
 
-        public List<T> List<T>(ISpecification<T> spec)
+        public List<T> List<T>(ISpecification<T> spec) where T : DataItem
         {
             var list = GetList<T>();
             return list.Where(i => spec.Predicate.Compile().Invoke(i)).ToList();
         }
 
-        public void Create<T>(T dataItem) where T : DataItem
+        public T Create<T>(T dataItem) where T : DataItem
         {
             throw new NotImplementedException();
         }
@@ -33,7 +33,7 @@ namespace ChatBot2000.Infrastructure.Json
             throw new NotImplementedException();
         }
 
-        public void Create<T>(List<T> dataItemList) where T : DataItem
+        public List<T> Create<T>(List<T> dataItemList) where T : DataItem
         {
             throw new NotImplementedException();
         }

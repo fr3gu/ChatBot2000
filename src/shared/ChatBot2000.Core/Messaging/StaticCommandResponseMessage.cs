@@ -1,9 +1,10 @@
+using ChatBot2000.Core.Data;
 using ChatBot2000.Core.Interfaces;
 using ChatBot2000.Core.Messaging.Interfaces;
 
 namespace ChatBot2000.Core.Messaging
 {
-    public class StaticCommandResponseMessage : ICommandMessage
+    public class StaticCommandResponseMessage : DataItem, ICommandMessage
     {
         private readonly string _staticResponse;
         public string CommandText { get; }
@@ -18,7 +19,5 @@ namespace ChatBot2000.Core.Messaging
             CommandText = commandText;
             DataItemStatus = dataItemStatus;
         }
-
-        public DataItemStatus DataItemStatus { get; }
     }
 }

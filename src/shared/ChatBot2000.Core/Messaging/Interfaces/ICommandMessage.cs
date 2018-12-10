@@ -4,7 +4,7 @@ using ChatBot2000.Core.Interfaces;
 
 namespace ChatBot2000.Core.Messaging.Interfaces
 {
-    public interface ICommandMessage : IDataItem
+    public interface ICommandMessage
     {
         string CommandText { get; }
         void Process(IChatClient triggeringClient, CommandReceivedEventArgs eventArgs);

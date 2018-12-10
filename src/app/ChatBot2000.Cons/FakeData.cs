@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Text;
 using System.Threading;
 using ChatBot2000.Core.Interfaces;
 using ChatBot2000.Core.Messaging;
@@ -12,14 +11,21 @@ namespace ChatBot2000.Cons
 {
     public class FakeData
     {
+        private readonly IRepository _repository;
+
+        public FakeData(IRepository repository)
+        {
+            _repository = repository;
+        }
+
         private static long GetMillisecondsFromMinutes(int i)
         {
             return i * 60 * 1000;
         }
 
-        private static List<IAutoMessage> GetRepeatingMessages()
+        private static List<RepeatingMessage> GetRepeatingMessages()
         {
-            var automatedMessages = new List<IAutoMessage> {
+            var automatedMessages = new List<RepeatingMessage> {
                 new RepeatingMessage(3000, "Hello and welcome! I hope you're enjoying the stream! Feel free to follow along, make suggestions, ask questions, or contribute! And make sure you click the follow button to know when the next stream is!", DataItemStatus.Active),
                 new RepeatingMessage(2000, "foo", DataItemStatus.Draft),
                 new RepeatingMessage(1000, "bar", DataItemStatus.Disabled),
@@ -27,20 +33,22 @@ namespace ChatBot2000.Cons
             return automatedMessages;
         }
 
-        private static List<ICommandMessage> GetICommandMessages()
+        private static List<StaticCommandResponseMessage> GetICommandMessages()
         {
-            return new List<ICommandMessage>
+            return new List<StaticCommandResponseMessage>
             {
                 new StaticCommandResponseMessage("coins", "Coins?!?! I think you meant !points", DataItemStatus.Active),
             };
 
         }
 
-        public static void Initialize()
+        public void Initialize()
         {
-            StoreData(GetRepeatingMessages());
+            //StoreData(GetRepeatingMessages());
+            _repository.Create(GetRepeatingMessages());
 
-            StoreData(GetICommandMessages());
+            //StoreData(GetICommandMessages());
+            _repository.Create(GetICommandMessages());
         }
 
         private static void StoreData<T>(List<T> automatedMessages)
