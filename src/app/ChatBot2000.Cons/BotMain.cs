@@ -68,7 +68,7 @@ namespace ChatBot2000.Cons
 
         private void PublishMessages()
         {
-            var messages = _repository.List(new ActiveMessagePolicy<IAutoMessage>());
+            var messages = _repository.List(StatusPolicy<RepeatingMessage>.ActiveOnly());
             foreach (var message in messages)
             {
                 _dispatcher.Publish(message);
