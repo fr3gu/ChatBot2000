@@ -1,8 +1,9 @@
-using ChatBot2000.Core.Interfaces;
+using ChatBot2000.Core.Data;
+using ChatBot2000.Core.Messaging.Interfaces;
 
-namespace ChatBot2000.Core.Messages
+namespace ChatBot2000.Core.Messaging
 {
-    public class RepeatingMessage : IAutoMessage
+    public class RepeatingMessage : DataItem, IAutoMessage
     {
         private long _lastRun;
         /// <summary>
@@ -10,24 +11,21 @@ namespace ChatBot2000.Core.Messages
         /// </summary>
         public long RepeatEvery { get; }
         public string Message { get; }
+        public DataItemStatus DataItemStatus { get; }
 
-        public RepeatingMessage(long repeatEvery, string message)
+        public RepeatingMessage(long repeatEvery, string message, DataItemStatus dataItemStatus = DataItemStatus.Draft)
         {
             _lastRun = 0;
             RepeatEvery = repeatEvery;
             Message = message;
+            DataItemStatus = dataItemStatus;
         }
 
         public bool IsTimeToDispatch(long milliSecondsPassed)
         {
             if (RepeatEvery == 0) return false;
 
-            // ReSharper disable once InvertIf
-            if (milliSecondsPassed >= _lastRun + RepeatEvery)
-            {
-                return true;
-            }
-            return false;
+            return milliSecondsPassed >= _lastRun + RepeatEvery;
         }
 
         public string GetMessageInstance(long milliSecondsPassed)

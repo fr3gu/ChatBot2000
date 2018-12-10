@@ -1,32 +1,52 @@
 using System;
+using System.Linq;
 using System.Threading.Tasks;
+using ChatBot2000.Core;
 using ChatBot2000.Core.Interfaces;
 using TwitchLib.Client;
+using TwitchLib.Client.Enums;
 using TwitchLib.Client.Events;
+using TwitchLib.Client.Extensions;
 using TwitchLib.Client.Models;
+using TwitchLib.Communication.Events;
 
 namespace ChatBot2000.Infrastructure.Twitch
 {
     public class TwitchChatClient : IChatClient
     {
         private readonly TwitchClient _twitchClient;
+        private readonly TaskCompletionSource<bool> _onConnectCompletionTask = new TaskCompletionSource<bool>();
+        private readonly TaskCompletionSource<bool> _onDisconnectCompletionTask = new TaskCompletionSource<bool>();
+        private readonly TwitchClientSettings _settings;
 
-        public TwitchChatClient(string userName, string oAuth)
+        public TwitchChatClient(TwitchClientSettings settings)
         {
-            var connectionCredentials = new ConnectionCredentials("chatbot2k", "oauth:vf3y61q70ara81seel2rmpne3ycdqb");
+            _settings = settings;
+            var connectionCredentials = new ConnectionCredentials(settings.UserName, settings.OAuth);
             _twitchClient = new TwitchClient();
-            _twitchClient.Initialize(connectionCredentials, "fr3gu_");
-            _twitchClient.Connect();
+            _twitchClient.Initialize(connectionCredentials, settings.Channel);
+            _twitchClient.AddChatCommandIdentifier('!');
+
             _twitchClient.OnJoinedChannel += TwitchClientOnOnJoinedChannel;
             _twitchClient.OnUserJoined += TwitchClientOnOnUserJoined;
             _twitchClient.OnUserLeft += TwitchClientOnOnUserLeft;
-            _twitchClient.AddChatCommandIdentifier('!');
             _twitchClient.OnChatCommandReceived += TwitchClientOnOnChatCommandReceived;
+        }
+
+        private void TwitchClientOnOnConnected(object sender, OnConnectedArgs e)
+        {
+            _onConnectCompletionTask.SetResult(true);;
         }
 
         private void TwitchClientOnOnChatCommandReceived(object sender, OnChatCommandReceivedArgs e)
         {
-            SendMessage($"Command received: {e.Command.CommandText}");
+            //switch (e.Command.CommandText)
+            //{
+            //    case "jello":
+            //        SendMessage($"Command received: {e.Command.CommandText}");
+            //        break;
+            //}
+            OnCommandReceived?.Invoke(this, e.ToCommandReceivedEventArgs());
         }
 
         private void TwitchClientOnOnUserLeft(object sender, OnUserLeftArgs e)
@@ -36,9 +56,9 @@ namespace ChatBot2000.Infrastructure.Twitch
 
         private void TwitchClientOnOnUserJoined(object sender, OnUserJoinedArgs e)
         {
-            if (e.Username != "chatbot2k")
+            if (e.Username != _settings.UserName)
             {
-                SendMessage($"Ohai {e.Username}");
+                SendMessage($"Ohai {e.Username}! \\o");
             }
         }
 
@@ -47,18 +67,38 @@ namespace ChatBot2000.Infrastructure.Twitch
             SendMessage($"{e.BotUsername} just entered. Behave!");
         }
 
-
-        public void Connect()
+        public async Task Connect()
         {
             if (!_twitchClient.IsConnected)
             {
                 _twitchClient.Connect();
+                _twitchClient.OnConnected += TwitchClientOnOnConnected;
             }
+
+            await _onConnectCompletionTask.Task;
         }
 
         public void SendMessage(string message)
         {
-            if(_twitchClient.IsConnected) _twitchClient.SendMessage("fr3gu_", message);
+            if(_twitchClient.IsConnected) _twitchClient.SendMessage(_settings.Channel, message);
+        }
+
+        public async Task Disconnect()
+        {
+            if (_twitchClient.IsConnected)
+            {
+                _twitchClient.Disconnect();
+                _twitchClient.OnDisconnected += TwitchClientOnOnDisconnected;
+            }
+
+            await _onDisconnectCompletionTask.Task;
+        }
+
+        public event EventHandler<CommandReceivedEventArgs> OnCommandReceived;
+
+        private void TwitchClientOnOnDisconnected(object sender, OnDisconnectedEventArgs e)
+        {
+            _onDisconnectCompletionTask.SetResult(true);
         }
     }
 }

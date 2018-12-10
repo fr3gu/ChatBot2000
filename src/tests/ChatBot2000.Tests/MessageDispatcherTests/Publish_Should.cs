@@ -1,5 +1,5 @@
 using ChatBot2000.Core;
-using ChatBot2000.Core.Messages;
+using ChatBot2000.Core.Messaging;
 using NUnit.Framework;
 
 namespace ChatBot2000.Tests.MessageDispatcherTests
